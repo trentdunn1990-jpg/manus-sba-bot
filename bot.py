@@ -2,6 +2,7 @@ import os
 import logging
 from telegram import Update
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes
+from trade_intelligence import get_trade_signals
 
 # Enable logging
 logging.basicConfig(
@@ -25,6 +26,13 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
     await update.message.reply_text("I'm Manus, your personal AI assistant. How can I help you?")
 
 
+async def trade_signal_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Get trade signals and send them to the user."""
+    await update.message.reply_text("Analyzing market data for trade signals... Please wait.")
+    signal_message = get_trade_signals()
+    await update.message.reply_text(signal_message)
+
+
 async def echo(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Echo the user message."""
     await update.message.reply_text(update.message.text)
@@ -38,6 +46,7 @@ def main() -> None:
     # on different commands - answer in Telegram
     application.add_handler(CommandHandler("start", start))
     application.add_handler(CommandHandler("help", help_command))
+    application.add_handler(CommandHandler("trade_signal", trade_signal_command))
 
     # on non command i.e message - echo the message on Telegram
     application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, echo))
