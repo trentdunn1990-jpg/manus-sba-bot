@@ -17,13 +17,13 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Send a message when the command /start is issued."""
     user = update.effective_user
     await update.message.reply_html(
-        f"Hi {user.mention_html()}!\n\nI\\'m your personal AI assistant, Manus. I\\'m here to help you with your tasks. Just tell me what you need!",
+        f"Hi {user.mention_html()}!\n\nI\\\'m your personal AI assistant, Manus. I\\\'m here to help you with your tasks. Just tell me what you need!",
     )
 
 
 async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Send a message when the command /help is issued."""
-    await update.message.reply_text("I\\'m Manus, your personal AI assistant. How can I help you?")
+    await update.message.reply_text("I\\\'m Manus, your personal AI assistant. How can I help you?")
 
 
 async def trade_signal_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -40,7 +40,7 @@ async def echo(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 
 def main() -> None:
     """Start the bot."""
-    # Create the Application and pass it your bot\\'s token.
+    # Create the Application and pass it your bot\\\'s token.
     application = Application.builder().token(os.environ.get("TELEGRAM_BOT_TOKEN")).build()
 
     # on different commands - answer in Telegram
@@ -52,7 +52,7 @@ def main() -> None:
     application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, echo))
 
     # Run the bot
-    application.start_polling(allowed_updates=Update.ALL_TYPES)
+    application.start_polling(allowed_updates=Update.ALL_TYPES, drop_pending_updates=True)
     application.idle()
 
 
